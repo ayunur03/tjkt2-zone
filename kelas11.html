@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TJKT2.Zone - Antologi Kenangan XI</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- RESET & BASIC STYLE (WARM PEACH / ORANYE PASTEL) --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    body {
+      background-color: #fff7ed !important; /* Soft Peach Pastel */
+      background-image: radial-gradient(#fdba74 1.2px, transparent 1.2px) !important;
+      background-size: 20px 20px !important;
+      color: #1e293b !important;
+      padding: 20px !important;
+      padding-top: 30px !important;
+      min-height: 100vh !important;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .animate-reveal {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px !important;
+      padding: 12px 28px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+      border: 2px solid #fed7aa !important;
+      margin-bottom: 35px !important;
+      position: sticky;
+      top: 15px;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #ea580c !important;
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: #06b6d4 !important;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #475569 !important;
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background-color: #f97316 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3) !important;
+    }
+
+    /* --- HEADER SECTION --- */
+    .class-header {
+      text-align: center;
+      margin-bottom: 45px;
+      margin-top: 20px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: #ffedd5 !important;
+      color: #c2410c !important;
+      padding: 6px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 2px dashed #fdba74 !important;
+      margin-bottom: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .class-header h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #c2410c !important;
+      margin-bottom: 12px;
+    }
+
+    .class-header p {
+      color: #475569 !important;
+      font-size: 1rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* --- PHOTO GALLERY GRID --- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .photo-card {
+      background: #ffffff !important;
+      border-radius: 20px !important;
+      padding: 14px !important;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04) !important;
+      border: 2px solid #fed7aa !important;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-6px);
+      border-color: #f97316 !important;
+      box-shadow: 0 12px 25px rgba(249, 115, 22, 0.15) !important;
+    }
+
+    /* --- WRAPPER FOTO --- */
+    .media-wrapper {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      background-color: #ffedd5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 60% 25%;
+      transition: transform 0.3s ease;
+    }
+
+    /* Class Universal untuk Foto Rombongan */
+    .media-wrapper.full-fit {
+      height: auto;
+      aspect-ratio: 16 / 10;
+    }
+
+    .media-wrapper.full-fit img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+    }
+
+    .photo-card:hover .media-wrapper img {
+      transform: scale(1.04);
+    }
+
+    /* BADGE KAPSUL DI ATAS FOTO */
+    .image-tag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #c2410c;
+      border: 1px solid #fdba74;
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .date-badge {
+      background: #ffedd5;
+      color: #c2410c;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid #fdba74;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #9a3412 !important;
+      margin-bottom: 10px;
+    }
+
+    /* --- QUOTE BOX DENGAN SKEMA WARNA PEACH/ORANYE --- */
+    .quote-box {
+      background: #fff7ed !important;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.83rem;
+      color: #7c2d12 !important;
+      line-height: 1.5;
+      font-weight: 500;
+      border-left: 4px solid #f97316 !important;
+      margin-top: auto;
+    }
+
+    /* --- HIGHLIGHT VIDEO SECTION --- */
+    .video-highlight-box {
+      background: #ffffff !important;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(249, 115, 22, 0.08);
+      border: 2px solid #fed7aa !important;
+      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .video-container {
+      width: 100%;
+      height: 280px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #1e293b;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-text-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .video-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background: #ffedd5;
+      color: #c2410c;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      border: 1px solid #fdba74;
+    }
+
+    .video-text-content h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #c2410c !important;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .video-text-content p {
+      font-size: 0.93rem;
+      color: #475569 !important;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .video-quote {
+      font-style: italic;
+      background: #fff7ed;
+      padding: 14px 18px;
+      border-left: 4px solid #f97316;
+      border-radius: 8px;
+      color: #9a3412;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: #64748b !important;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .video-highlight-box {
+        grid-template-columns: 1fr;
+      }
+      .video-container {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 20px !important;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .class-header h1 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container animate-reveal">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <a href="index.html" class="logo">✨ TJKT2<span>.Zone</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home 🏠</a></li>
+        <li><a href="anggota.html">Anggota 👥</a></li>
+        <li><a href="kelas10.html">Kelas X 🌱</a></li>
+        <li><a href="kelas11.html" class="active">Kelas XI 🔥</a></li>
+        <li><a href="kelas12.html">Kelas XII 🎓</a></li>
+        <li><a href="contact.html">Kontak 💌</a></li>
+      </ul>
+    </nav>
+
+    <!-- HEADER KELAS 11 SASTRA -->
+    <section class="class-header animate-reveal delay-1">
+      <span class="badge-tag">🔥 ANTOLOGI MASA AMBISI & TAWA</span>
+      <h1>Jejak Langkah XI TJKT 2 ⚡</h1>
+      <p>"Di bawah naungan langit sekolah yang sama, kita merajut tawa, mengukir asa, dan menjadikan setiap detik sederhana sebagai kenangan yang abadi."</p>
+    </section>
+
+    <!-- GALLERY GRID -->
+    <div class="gallery-grid animate-reveal delay-2">
+      
+      <!-- 1. First Pict -->
+      <div class="photo-card">
+        <div class="media-wrapper">
+          <span class="image-tag">🌿 Awal Lembaran</span>
+          <img src="image/k11-kegiatan1.jpg.jpeg" alt="Langkah Awal XI TJKT 2" style="object-position: 25% 25%;">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 31 Juli 2025</span>
+        </div>
+        <div class="card-title">Langkah Awal XI TJKT 2</div>
+        <div class="quote-box">
+          "Satu foto, jutaan harapan. Di sinilah tawa pertama di kelas XI terabadikan, menjadi saksi lahirnya ikatan yang makin erat dan mimpi-mimpi yang mulai dirajut bersama."
+        </div>
+      </div>
+
+      <!-- 2. Sixfouria Day 1 (HUT SMKN 1 Klaten) -->
+      <div class="photo-card">
+        <div class="media-wrapper">
+          <span class="image-tag">🏃‍♂️ Nyala Semarak Perdana</span>
+          <img src="image/k11-kegiatan2.jpg.jpeg" alt="Sixfouria Day 1" style="object-position: 50% 70%;">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 27 Agustus 2025</span>
+        </div>
+        <div class="card-title">Sixfouria Day 1</div>
+        <div class="quote-box">
+          "Langkah-langkah riang menyambut gema Sixfouria. Di sudut sekolah ini, tawa pecah melebur bersama riuh kebersamaan yang membakar semangat masa muda."
+        </div>
+      </div>
+
+      <!-- 3. Sixfouria Day 2 (HUT SMKN 1 Klaten) -->
+      <div class="photo-card">
+        <div class="media-wrapper">
+          <span class="image-tag">🎉 Puncak Gempita Rasa</span>
+          <img src="image/k11-kegiatan3.jpg.jpeg" alt="Sixfouria Day 2" style="transform: scale(1.2); object-position: 50% 70%;">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 28 Agustus 2025</span>
+        </div>
+        <div class="card-title">Sixfouria Day 2</div>
+        <div class="quote-box">
+          "Di bawah bentangan langit dan warna panggung sederhana, gempita perayaan mencapai puncaknya. Mengunci derai tawa menjadi prasasti kenangan yang tak kan pupus."
+        </div>
+      </div>
+
+      <!-- 4. Hari Bela Negara -->
+      <div class="photo-card">
+        <div class="media-wrapper">
+          <span class="image-tag">🎖️ Patriot Muda</span>
+          <img src="image/k11-kegiatan4.jpg.jpeg" alt="Hari Bela Negara" style="object-position: 50% 80%;">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 19 Desember 2025</span>
+        </div>
+        <div class="card-title">Hari Bela Negara</div>
+        <div class="quote-box">
+          "Tegak berdiri menyatukan rasa cinta tanah air. Dalam balutan seragam dan topi kebanggaan, kita merawat asa menjaga nama baik almamater tercinta."
+        </div>
+      </div>
+
+      <!-- 5. Hari Kartini -->
+      <div class="photo-card">
+        <div class="media-wrapper">
+          <span class="image-tag">✨ Gema Anggun Kartini</span>
+          <img src="image/k11-kegiatan5.jpg.jpeg" alt="Hari Kartini" style="object-position: 50% 85%;">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 21 April 2026</span>
+        </div>
+        <div class="card-title">Hari Kartini</div>
+        <div class="quote-box">
+          "Merayakan emansipasi dan keberanian dalam balutan warisan budaya. Di hamparan rumput hijau, kita merajut asa melanjutkan perjuangan sang pelita."
+        </div>
+      </div>
+
+      <!-- 6. Hari Pendidikan Nasional -->
+      <div class="photo-card">
+        <div class="media-wrapper">
+          <span class="image-tag">🎓 Pelita Ilmu</span>
+          <img src="image/k11-haripendidikan.jpg.jpeg" alt="Hari Pendidikan Nasional">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 2 Mei 2026</span>
+        </div>
+        <div class="card-title">Hari Pendidikan Nasional</div>
+        <div class="quote-box">
+          "Meneladani asa dan semangat belajar, melangkah bersama sebagai insan muda yang siap menatap terang masa depan."
+        </div>
+      </div>
+
+      <!-- 7. Perpisahan Kakak PPG -->
+      <div class="photo-card">
+        <div class="media-wrapper full-fit">
+          <span class="image-tag">🎓 Jejak Bimbingan</span>
+          <img src="image/k11-kegiatan6.jpg.jpeg" alt="Salam Hangat Untuk Kakak PPG">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 30 April 2026</span>
+        </div>
+        <div class="card-title">Salam Hangat Untuk Kakak PPG</div>
+        <div class="quote-box">
+          "Terima kasih telah menjadi bagian dari perjalanan kami. Setiap ilmu, ketulusan, dan senyuman yang terukir akan selalu tersimpan rapi dalam memori kebersamaan ini."
+        </div>
+      </div>
+
+      <!-- 8. Pementasan Drama -->
+      <div class="photo-card">
+        <div class="media-wrapper full-fit">
+          <span class="image-tag">🎭 Seni & Peran</span>
+          <img src="image/k11-kegiatan7.jpg.jpeg" alt="Pementasan Drama">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 5 Juni 2026</span>
+        </div>
+        <div class="card-title">Pementasan Drama</div>
+        <div class="quote-box">
+          "Lebur dalam karakter, menari dalam narasi drama. Di atas panggung ini, bakat dan ketulusan rasa menyatu sempurna."
+        </div>
+      </div>
+
+      <!-- 9. Classmeeting Narantara -->
+      <div class="photo-card">
+        <div class="media-wrapper full-fit">
+          <span class="image-tag">🏆 Tawa Lepas</span>
+          <img src="image/k11-kegiatan8.jpg.jpeg" alt="Classmeeting Narantara">
+        </div>
+        <div class="card-meta">
+          <span class="date-badge">🗓️ 11 Juni 2026</span>
+        </div>
+        <div class="card-title">Classmeeting Narantara</div>
+        <div class="quote-box">
+          "Menutup penat ujian dengan langkah riang. Berjalan beriringan menikmati suasana sekolah yang hangat dan penuh kebebasan."
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SPECIAL HIGHLIGHT SECTION -->
+    <div class="video-highlight-box animate-reveal delay-3">
+      <div class="video-container">
+        <video controls poster="image/k11-kegiatan7.jpg.jpeg">
+          <source src="video/video-k11.mp4" type="video/mp4">
+          Browser kamu tidak mendukung pemutaran video.
+        </video>
+      </div>
+
+      <div class="video-text-content">
+        <span class="video-badge">🎬 HIGHLIGHT KESERUAN</span>
+        <h2>Gemuruh Riuk Panggung Drama 🌟</h2>
+        <p>
+          Detik-detik berharga ketika panggung Bahasa Indonesia tanggal <strong>5 Juni 2026</strong> menjadi saksi leburnya canggung menjadi karya, dan lelah menjadi tepuk tangan yang menggema.
+        </p>
+        <div class="video-quote">
+          "Kelas XI bukan sekadar deretan angka, melainkan panggung tempat kita merayakan masa muda. Dari tiap tawa yang pecah, terukir kenangan abadi yang tak akan lekang oleh waktu."
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      Dibuat oleh XII TJKT 2 • SMK Negeri 1 Klaten
+    </footer>
+  </div>
+
+</body>
+</html>

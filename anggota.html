@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TJKT2.Zone - Anggota Kelas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- RESET & PURPLE PASTEL THEME --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    :root {
+      --bg-color: #faf5ff;
+      --primary-purple: #a855f7;
+      --secondary-purple: #7e22ce;
+      --dark-purple: #581c87;
+      --border-purple: #d8b4fe;
+      --light-purple-badge: #f3e8ff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+    }
+
+    body {
+      background-color: var(--bg-color) !important;
+      background-image: radial-gradient(rgba(216, 180, 254, 0.4) 1.2px, transparent 1.2px) !important;
+      background-size: 24px 24px !important;
+      color: var(--text-main) !important;
+      padding: 20px !important;
+      padding-top: 30px !important;
+      min-height: 100vh !important;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes fadeInUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .animate-reveal {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+
+    /* --- MODERN NAVBAR --- */
+    .navbar {
+      background: var(--glass-bg) !important;
+      backdrop-filter: blur(15px) saturate(180%);
+      -webkit-backdrop-filter: blur(15px) saturate(180%);
+      border-radius: 100px !important;
+      padding: 12px 35px !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      box-shadow: 0 8px 32px rgba(168, 85, 247, 0.08) !important;
+      border: 1px solid var(--border-purple) !important;
+      margin-bottom: 35px !important;
+      position: sticky;
+      top: 15px;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--secondary-purple) !important;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: #f97316 !important;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted) !important;
+      padding: 9px 18px;
+      border-radius: 50px;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover {
+      background-color: var(--primary-purple) !important;
+      color: #ffffff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(168, 85, 247, 0.35) !important;
+    }
+
+    /* --- HEADER SECTION --- */
+    .header-section {
+      text-align: center;
+      margin-bottom: 40px;
+      margin-top: 20px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: var(--light-purple-badge) !important;
+      color: var(--secondary-purple) !important;
+      padding: 6px 20px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px dashed var(--border-purple) !important;
+      margin-bottom: 15px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .header-section h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: var(--secondary-purple) !important;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .header-section p {
+      color: var(--text-muted) !important;
+      font-size: 1rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* --- MEMBERS GRID --- */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .member-card {
+      background: #ffffff !important;
+      border-radius: 20px !important;
+      padding: 15px !important;
+      box-shadow: 0 8px 20px rgba(168, 85, 247, 0.06) !important;
+      border: 2px solid var(--border-purple) !important;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .member-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-purple) !important;
+      box-shadow: 0 12px 25px rgba(168, 85, 247, 0.2) !important;
+    }
+
+    .last-row-center {
+      grid-column: 2;
+    }
+
+    .absen-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--light-purple-badge);
+      color: var(--dark-purple);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border-purple);
+      z-index: 2;
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 200px;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background-color: var(--light-purple-badge);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-purple);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      transition: transform 0.3s ease;
+    }
+
+    .member-card:hover .photo-frame img {
+      transform: scale(1.05);
+    }
+
+    .member-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--dark-purple) !important;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .ig-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--secondary-purple);
+      text-decoration: none;
+      background: var(--light-purple-badge);
+      padding: 6px 14px;
+      border-radius: 50px;
+      transition: all 0.2s ease;
+      margin-top: auto;
+      border: 1px solid var(--border-purple);
+    }
+
+    .ig-link:hover {
+      background: var(--primary-purple);
+      color: #ffffff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--text-muted) !important;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 1024px) {
+      .members-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .last-row-center {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .members-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .navbar {
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 20px !important;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .header-section h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .members-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* --- CUSTOM POSISI FOTO INDIVIDUAL --- */
+    .members-grid > .member-card:nth-child(3) .photo-frame img { object-position: center 45%; }
+    .members-grid > .member-card:nth-child(4) .photo-frame img { object-position: center 10%; }
+    .members-grid > .member-card:nth-child(9) .photo-frame img { object-position: center 80%; }
+    .members-grid > .member-card:nth-child(12) .photo-frame img { object-position: center 80%; }
+    .members-grid > .member-card:nth-child(13) .photo-frame img { object-position: center 65%; }
+    .members-grid > .member-card:nth-child(14) .photo-frame img { object-position: center 28%; }
+    .members-grid > .member-card:nth-child(15) .photo-frame img { object-position: center 55%; }
+    .members-grid > .member-card:nth-child(20) .photo-frame img { object-position: center top; }
+    .members-grid > .member-card:nth-child(24) .photo-frame img { object-position: center 70%; }
+    .members-grid > .member-card:nth-child(25) .photo-frame img { object-position: center 60%; }
+    .members-grid > .member-card:nth-child(27) .photo-frame img { object-position: center 38%; }
+    .members-grid > .member-card:nth-child(28) .photo-frame img { object-position: center 45%; }
+    .members-grid > .member-card:nth-child(29) .photo-frame img { object-position: center 35%; }
+    .members-grid > .member-card:nth-child(30) .photo-frame img { object-position: center 10%; }
+
+    /* Absen #32 (Rochmad Wahyu) - Disesuaikan agar kepala tidak terpotong & pas di bawah tangan */
+    .members-grid > .member-card:nth-child(32) .photo-frame img { 
+      object-fit: cover !important; 
+      object-position: center 62% !important; 
+    }
+
+    /* Absen #34 (Vivia Eva Cahaya) */
+    .members-grid > .member-card:nth-child(34) .photo-frame img { object-position: center 35%; }
+  </style>
+</head>
+<body>
+
+  <div class="container animate-reveal">
+    <nav class="navbar">
+      <a href="index.html" class="logo">✨ TJKT2<span>.Zone</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home 🏠</a></li>
+        <li><a href="anggota.html" class="active">Anggota 👥</a></li>
+        <li><a href="kelas10.html">Kelas X 🌱</a></li>
+        <li><a href="kelas11.html">Kelas XI 🔥</a></li>
+        <li><a href="kelas12.html">Kelas XII 🎓</a></li>
+        <li><a href="contact.html">Kontak 💌</a></li>
+      </ul>
+    </nav>
+
+    <section class="header-section animate-reveal delay-1">
+      <span class="badge-tag">💜 KELUARGA BESAR TJKT 2</span>
+      <h1>Daftar Siswa Kelas 🌟</h1>
+      <p>34 Karakter, 34 Kisah, Unik dalam Satu Keluarga TJKT 2.</p>
+    </section>
+
+    <div class="members-grid animate-reveal delay-2">
+
+      <div class="member-card">
+        <span class="absen-badge">#01</span>
+        <div class="photo-frame">
+          <img src="image/absen1.jpg.jpeg" alt="Absen 01">
+        </div>
+        <div class="member-name">Aisha Alifa Islamidina</div>
+        <a href="https://www.instagram.com/aisamdna?igsh=MXh3ZHl0dTc5bGtpOQ==" target="_blank" class="ig-link">📸 @aisamdna</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#02</span>
+        <div class="photo-frame">
+          <img src="image/absen2.jpg.jpeg" alt="Absen 02">
+        </div>
+        <div class="member-name">Alim Bandaru Mulya</div>
+        <a href="https://www.instagram.com/alimbandaru?igsh=bnFjanJlcGFrN2Zr" target="_blank" class="ig-link">📸 @alimbandaru</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#03</span>
+        <div class="photo-frame">
+          <img src="image/absen3.jpg.jpeg" alt="Absen 03">
+        </div>
+        <div class="member-name">Alvinza Ghany Adnanirwan</div>
+        <a href="https://www.instagram.com/anohaceoo?igsh=ZnY3MTRvZ3g2dDd1" target="_blank" class="ig-link">📸 @anohaceoo</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#04</span>
+        <div class="photo-frame">
+          <img src="image/absen4.jpg.jpeg" alt="Absen 04">
+        </div>
+        <div class="member-name">Andika Yoga Pratama</div>
+        <a href="https://www.instagram.com/agoy_ege?igsh=cXk1bGx2OXpqZ2Vi" target="_blank" class="ig-link">📸 @agoy_ege</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#05</span>
+        <div class="photo-frame">
+          <img src="image/absen5.jpg.jpeg" alt="Absen 05">
+        </div>
+        <div class="member-name">Anisa Sekar Wijayanti</div>
+        <a href="https://www.instagram.com/anisasekarrr8?igsh=YWdld3V3bmtkeTEy" target="_blank" class="ig-link">📸 @anisasekarrr8</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#06</span>
+        <div class="photo-frame">
+          <img src="image/absen6.jpg.jpeg" alt="Absen 06">
+        </div>
+        <div class="member-name">Aourel Nur Azhura</div>
+        <a href="https://www.instagram.com/4zhuraaa?igsh=NzRxa2Uwb3pwazJp" target="_blank" class="ig-link">📸 @4zhuraaa</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#07</span>
+        <div class="photo-frame">
+          <img src="image/absen7.jpg.jpeg" alt="Absen 07">
+        </div>
+        <div class="member-name">Avrilia Putri Sabila</div>
+        <a href="https://www.instagram.com/avriltss_?igsh=dGIxcDc0OGxtN3Nz" target="_blank" class="ig-link">📸 @avriltss_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#08</span>
+        <div class="photo-frame">
+          <img src="image/absen8.jpg.jpeg" alt="Absen 08">
+        </div>
+        <div class="member-name">Ayu Nur Hidayati</div>
+        <a href="https://www.instagram.com/yua.reii?igsh=cTRjYTFpNjN5dGxn" target="_blank" class="ig-link">📸 @yua.reii</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#09</span>
+        <div class="photo-frame">
+          <img src="image/absen9.jpg.jpeg" alt="Absen 09">
+        </div>
+        <div class="member-name">Chanif Sehti Hilal</div>
+        <a href="https://www.instagram.com/chanifsehti_?igsh=N3Z2eXZ2OG01b3I4" target="_blank" class="ig-link">📸 @chanifsehti_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#10</span>
+        <div class="photo-frame">
+          <img src="image/absen10.jpg.jpeg" alt="Absen 10">
+        </div>
+        <div class="member-name">Cyril Dwi Noviyanto</div>
+        <a href="https://www.instagram.com/cy.dwwiie12?igsh=YzJvd3N6cjFncTJr" target="_blank" class="ig-link">📸 @cy.dwwiie12</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#11</span>
+        <div class="photo-frame">
+          <img src="image/absen11.jpg.jpeg" alt="Absen 11">
+        </div>
+        <div class="member-name">Fatimah Zahro</div>
+        <a href="https://www.instagram.com/this_zhara?igsh=dXBtaWE4Nzg4cHN2" target="_blank" class="ig-link">📸 @this_zhara</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#12</span>
+        <div class="photo-frame">
+          <img src="image/absen12.jpg.jpeg" alt="Absen 12">
+        </div>
+        <div class="member-name">Fauzan Ardiansyah</div>
+        <a href="https://www.instagram.com/fauznn.arrr?igsh=MTF0NGlzdjVwbHRlMA==" target="_blank" class="ig-link">📸 @fauznn.arrr</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#13</span>
+        <div class="photo-frame">
+          <img src="image/absen13.jpg.jpeg" alt="Absen 13">
+        </div>
+        <div class="member-name">Fauzan Azizan Efendi</div>
+        <a href="https://www.instagram.com/fauzzzz_aja?igsh=cGZyMzRvMWNjYzA=" target="_blank" class="ig-link">📸 @fauzzzz_aja</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#14</span>
+        <div class="photo-frame">
+          <img src="image/absen14.jpg.jpeg" alt="Absen 14">
+        </div>
+        <div class="member-name">Indah Maulidia</div>
+        <a href="https://www.instagram.com/iiindhmldiaa?igsh=MTI4bzZrc3kzbzc3Mw==" target="_blank" class="ig-link">📸 @iiindhmldiaa</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#15</span>
+        <div class="photo-frame">
+          <img src="image/absen15.jpg.jpeg" alt="Absen 15">
+        </div>
+        <div class="member-name">Irfan Agung Pratama</div>
+        <a href="https://www.instagram.com/irpnnap_?igsh=MXF4MnowMThqdWJ6NQ==" target="_blank" class="ig-link">📸 @irpnnap_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#16</span>
+        <div class="photo-frame">
+          <img src="image/absen16.jpg.jpeg" alt="Absen 16">
+        </div>
+        <div class="member-name">Isnaini Wahyu Nurjanah</div>
+        <a href="https://www.instagram.com/isnaininrjnhh?igsh=MTZxMmp1c2U5ZG1heg==" target="_blank" class="ig-link">📸 @isnaininrjnhh</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#17</span>
+        <div class="photo-frame">
+          <img src="image/absen17.jpg.jpeg" alt="Absen 17">
+        </div>
+        <div class="member-name">Julia Kurnia Wati</div>
+        <a href="https://www.instagram.com/_llovlyiaa?igsh=MTkxY2xhNnp1Njlsag==" target="_blank" class="ig-link">📸 @_llovlyiaa</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#18</span>
+        <div class="photo-frame">
+          <img src="image/absen18.jpg.jpeg" alt="Absen 18">
+        </div>
+        <div class="member-name">Kenathan Dzaki</div>
+        <a href="https://www.instagram.com/_knthnn?igsh=NXgyNnVhd2praDYw" target="_blank" class="ig-link">📸 @_knthnn</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#19</span>
+        <div class="photo-frame">
+          <img src="image/absen19.jpg.jpeg" alt="Absen 19">
+        </div>
+        <div class="member-name">Kevin Zulfikar Aqib Syaifudin</div>
+        <a href="https://www.instagram.com/cyberozota?igsh=dndhdTdyendtbDdi" target="_blank" class="ig-link">📸 @cyberozota</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#20</span>
+        <div class="photo-frame">
+          <img src="image/absen20.jpg.jpeg" alt="Absen 20">
+        </div>
+        <div class="member-name">Khairunnisa Ramadhani</div>
+        <a href="https://www.instagram.com/khairunnisa.zhr?igsh=MXc3OGhoajRlbWxzdQ==" target="_blank" class="ig-link">📸 @khairunnisa.zhr</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#21</span>
+        <div class="photo-frame">
+          <img src="image/absen21.jpg.jpeg" alt="Absen 21">
+        </div>
+        <div class="member-name">Khansa Nuza Maritza</div>
+        <a href="https://www.instagram.com/khansanzm?igsh=MWRrZmswajNpcmUxeA==" target="_blank" class="ig-link">📸 @khansanzm</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#22</span>
+        <div class="photo-frame">
+          <img src="image/absen22.jpg.jpeg" alt="Absen 22">
+        </div>
+        <div class="member-name">Lintang Dea Elsaputri</div>
+        <a href="https://www.instagram.com/deaelsaaa_?igsh=MWh5b2dmdzZkbTVxOA==" target="_blank" class="ig-link">📸 @deaelsaaa_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#23</span>
+        <div class="photo-frame">
+          <img src="image/absen23.jpg.jpeg" alt="Absen 23">
+        </div>
+        <div class="member-name">Marlena Eka Nuraini</div>
+        <a href="https://www.instagram.com/nniiixc?igsh=MTM4ZTJ5aWxtOGF1dA==" target="_blank" class="ig-link">📸 @nniiixc</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#24</span>
+        <div class="photo-frame">
+          <img src="image/absen24.jpg.jpeg" alt="Absen 24">
+        </div>
+        <div class="member-name">Muhammad Satrihatmojo</div>
+        <a href="https://www.instagram.com/jojo.65_?igsh=MW81YzZnOTFqMnF0bQ==" target="_blank" class="ig-link">📸 @jojo.65_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#25</span>
+        <div class="photo-frame">
+          <img src="image/absen25.jpg.jpeg" alt="Absen 25">
+        </div>
+        <div class="member-name">Muklis Drajat Wiyoto</div>
+        <a href="https://www.instagram.com/mukliswyt?igsh=MTBsMXJsdnpoem9mdA==" target="_blank" class="ig-link">📸 @mukliswyt</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#26</span>
+        <div class="photo-frame">
+          <img src="image/absen26.jpg.jpeg" alt="Absen 26">
+        </div>
+        <div class="member-name">Nabila Alya Mukhbita Fimi</div>
+        <a href="https://www.instagram.com/nblayaaaa?igsh=MTZzbDA3YWZ4MGJ2OQ==" target="_blank" class="ig-link">📸 @nblayaaaa</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#27</span>
+        <div class="photo-frame">
+          <img src="image/absen27.jpg.jpeg" alt="Absen 27">
+        </div>
+        <div class="member-name">Nadhifah Ramadhani</div>
+        <a href="https://www.instagram.com/ndhfrmdhni?igsh=MTM2bXkzb2ZncXFqaQ==" target="_blank" class="ig-link">📸 @ndhfrmdhni</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#28</span>
+        <div class="photo-frame">
+          <img src="image/absen28.jpg.jpeg" alt="Absen 28">
+        </div>
+        <div class="member-name">Novitania Ayudya Permata</div>
+        <a href="https://www.instagram.com/n.ayudyaprmta_?igsh=NnU5eXRnZnd6bmx6" target="_blank" class="ig-link">📸 @n.ayudyaprmta_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#29</span>
+        <div class="photo-frame">
+          <img src="image/absen29.jpg.jpeg" alt="Absen 29">
+        </div>
+        <div class="member-name">Nurul Azizah Handayani</div>
+        <a href="https://www.instagram.com/nrlazhh?igsh=MW8yaGh2djJ2N3J5Zw==" target="_blank" class="ig-link">📸 @nrlazhh</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#30</span>
+        <div class="photo-frame">
+          <img src="image/absen30.jpg.jpeg" alt="Absen 30">
+        </div>
+        <div class="member-name">Risma Juni Alisa</div>
+        <a href="https://www.instagram.com/alsq.png?igsh=eTNqdWFjcmtlMWJw" target="_blank" class="ig-link">📸 @alsq.png</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#31</span>
+        <div class="photo-frame">
+          <img src="image/absen31.jpg.jpeg" alt="Absen 31">
+        </div>
+        <div class="member-name">Rizka Alfiani Putri</div>
+        <a href="https://www.instagram.com/rzkaalf_?igsh=dGZ5OWY3bTEyZG5k" target="_blank" class="ig-link">📸 @rzkaalf_</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#32</span>
+        <div class="photo-frame">
+          <img src="image/absen32.jpg.jpeg" alt="Absen 32">
+        </div>
+        <div class="member-name">Rochmad Wahyu Aditya Rizki Setyawan</div>
+        <a href="https://www.instagram.com/ro.maadd?igsh=MXMyOTViYjU4MjZneA==" target="_blank" class="ig-link">📸 @ro.maadd</a>
+      </div>
+
+      <div class="member-card last-row-center">
+        <span class="absen-badge">#33</span>
+        <div class="photo-frame">
+          <img src="image/absen33.jpg.jpeg" alt="Absen 33">
+        </div>
+        <div class="member-name">Salman Alfarishy</div>
+        <a href="https://www.instagram.com/salmanalfarishyy?igsh=MWl6MWZsMnc5emFxbQ==" target="_blank" class="ig-link">📸 @salmanalfarishyy</a>
+      </div>
+
+      <div class="member-card">
+        <span class="absen-badge">#34</span>
+        <div class="photo-frame">
+          <img src="image/absen34.jpg.jpeg" alt="Absen 34">
+        </div>
+        <div class="member-name">Vivia Eva Cahaya</div>
+        <a href="https://www.instagram.com/vviachy_?igsh=N2JxdTlkY2ltcHo5" target="_blank" class="ig-link">📸 @vviachy_</a>
+      </div>
+
+    </div>
+
+    <footer>
+      Dibuat oleh XII TJKT 2 • SMK Negeri 1 Klaten
+    </footer>
+  </div>
+
+</body>
+</html>

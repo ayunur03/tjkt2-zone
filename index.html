@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TJKT2.Zone - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- RESET & PASTEL BLUE THEME --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    :root {
+      --bg-color: #f0f9ff;
+      --primary-blue: #38bdf8;
+      --secondary-blue: #0284c7;
+      --dark-blue: #0369a1;
+      --border-blue: #bae6fd;
+      --text-main: #334155;
+      --text-muted: #64748b;
+      --accent-orange: #ea580c;
+      --glass-bg: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+      background-color: var(--bg-color);
+      background-image: radial-gradient(#0ea5e9 1px, transparent 1px);
+      background-size: 22px 22px;
+      color: var(--text-main);
+      padding: 20px;
+      padding-top: 25px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* --- ANIMATION --- */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-reveal {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* --- NAVBAR --- */
+    .navbar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 50px;
+      padding: 10px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 18px rgba(14, 165, 233, 0.08);
+      border: 1.8px solid var(--primary-blue);
+      margin-bottom: 35px;
+      position: sticky;
+      top: 15px;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0284c7;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo span {
+      color: var(--accent-orange);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover {
+      background-color: var(--primary-blue);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
+    }
+
+    /* --- HEADER SECTION --- */
+    .class-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .badge-tag {
+      display: inline-block;
+      background: #e0f2fe;
+      color: var(--dark-blue);
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: 1.5px dashed var(--primary-blue);
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .class-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--dark-blue);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .class-header p {
+      color: var(--text-main);
+      font-size: 0.95rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 14px 22px;
+      border-radius: 18px;
+      border: 1.5px dashed #bae6fd;
+    }
+
+    /* --- POLAROID PHOTO CARD --- */
+    .photo-section {
+      display: flex;
+      justify-content: center;
+      margin: 35px 0 45px;
+    }
+
+    .polaroid-card {
+      position: relative;
+      background: #ffffff;
+      padding: 12px 12px 20px 12px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.12);
+      border: 1.8px solid var(--primary-blue);
+      transform: rotate(-1.5deg);
+      transition: all 0.3s ease;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .polaroid-card:hover {
+      transform: rotate(0deg) scale(1.02);
+      box-shadow: 0 15px 30px rgba(2, 132, 199, 0.18);
+    }
+
+    .polaroid-card::before {
+      content: '';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 22px;
+      background: rgba(56, 189, 248, 0.3);
+      border-radius: 2px;
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      z-index: 2;
+    }
+
+    .polaroid-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .polaroid-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--secondary-blue);
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- HERO GRID (LAYOUT BERDAMPINGAN) --- */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 35px;
+      align-items: stretch;
+    }
+
+    /* HERO CARD (KIRI) */
+    .hero-card {
+      background: #ffffff;
+      border: 2px solid var(--border-blue);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.04);
+    }
+
+    .hero-card h2 {
+      color: var(--secondary-blue);
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .hero-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* COUNTDOWN CARD (KANAN) */
+    .countdown-card {
+      background: #ffffff;
+      border: 2px dashed var(--primary-blue);
+      border-radius: 24px;
+      padding: 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(125, 211, 252, 0.15);
+    }
+
+    .countdown-title {
+      color: var(--secondary-blue);
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      letter-spacing: 0.3px;
+    }
+
+    .timer-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .time-box {
+      background: #f0f9ff;
+      border: 1.5px solid var(--border-blue);
+      border-radius: 16px;
+      padding: 10px 12px;
+      min-width: 65px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .time-box span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--dark-blue);
+      line-height: 1;
+    }
+
+    .time-box label {
+      font-size: 0.68rem;
+      color: var(--primary-blue);
+      margin-top: 6px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* --- FEATURE GRID --- */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      margin-bottom: 35px;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 6px 18px rgba(14, 165, 233, 0.05);
+      border: 1.8px solid var(--border-blue);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--primary-blue);
+      box-shadow: 0 12px 24px rgba(56, 189, 248, 0.15);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .step-number {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--secondary-blue);
+      background: #e0f2fe;
+      padding: 4px 10px;
+      border-radius: 10px;
+    }
+
+    .year-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      background: #f8fafc;
+      color: var(--text-muted);
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .feature-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--dark-blue);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .card-action {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--secondary-blue);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s ease;
+    }
+
+    .feature-card:hover .card-action {
+      color: var(--accent-orange);
+    }
+
+    /* --- BANNER BAWAH --- */
+    .farewell-banner {
+      background: #ffffff;
+      border: 2px dashed var(--primary-blue);
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .farewell-banner h3 {
+      color: var(--dark-blue);
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .farewell-banner p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      text-align: center;
+      padding: 18px 0;
+      color: var(--secondary-blue);
+      font-size: 0.82rem;
+      font-weight: 600;
+      border-top: 1px solid var(--border-blue);
+    }
+
+    /* --- MASKOT KUCING FLOATING WIDGET --- */
+    .cat-mascot-widget {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      pointer-events: none;
+    }
+
+    .cat-speech-bubble {
+      pointer-events: auto;
+      background: #ffffff;
+      color: var(--dark-blue);
+      border: 2px solid var(--primary-blue);
+      padding: 10px 14px;
+      border-radius: 16px;
+      border-bottom-right-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(14, 165, 233, 0.18);
+      margin-bottom: 8px;
+      max-width: 200px;
+      text-align: right;
+      animation: fadeInUp 0.5s ease-out forwards;
+      line-height: 1.4;
+    }
+
+    .cat-avatar-btn {
+      pointer-events: auto;
+      width: 58px;
+      height: 58px;
+      background: #ffffff;
+      border: 2.5px solid var(--primary-blue);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(14, 165, 233, 0.25);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+    }
+
+    .cat-avatar-btn:hover {
+      transform: scale(1.12) rotate(8deg);
+      border-color: var(--secondary-blue);
+      box-shadow: 0 12px 28px rgba(14, 165, 233, 0.35);
+    }
+
+    /* RESPONSIVE LAYOUT */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 24px;
+        padding: 12px 20px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+      }
+      .nav-links a {
+        padding: 6px 14px;
+        font-size: 0.82rem;
+      }
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .timer-container {
+        gap: 8px;
+      }
+      .time-box {
+        padding: 8px 10px;
+        min-width: 58px;
+      }
+      .time-box span {
+        font-size: 1.3rem;
+      }
+      .cat-mascot-widget {
+        bottom: 15px;
+        right: 15px;
+      }
+      .cat-avatar-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container animate-reveal">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <a href="index.html" class="logo">✨ TJKT2<span>.Zone</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home 🏠</a></li>
+        <li><a href="anggota.html">Anggota 👥</a></li>
+        <li><a href="kelas10.html">Kelas X 🌱</a></li>
+        <li><a href="kelas11.html">Kelas XI 🔥</a></li>
+        <li><a href="kelas12.html">Kelas XII 🎓</a></li>
+        <li><a href="contact.html">Kontak 💌</a></li>
+      </ul>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="class-header animate-reveal delay-1">
+      <span class="badge-tag">XII TJKT 2 — Angkatan 2024–2027</span>
+      <h1>Jejak Langkah & Tawa<br>Keluarga XII TJKT 2</h1>
+      <p>Selamat datang di ruang hangat tempat ingatan dirawat. Di balik setiap baris kode, kabel yang saling bertaut, dan gelak tawa di koridor sekolah, ada kisah manis yang kita ukir bersama di SMK Negeri 1 Klaten.</p>
+    </section>
+
+    <!-- FOTO UTAMA SEKELAS -->
+    <div class="photo-section animate-reveal delay-2">
+      <div class="polaroid-card">
+        <img src="image/sekelas.jpg.jpeg" alt="Foto Angkatan XII TJKT 2">
+        <div class="polaroid-caption">Keluarga Besar XII TJKT 2</div>
+      </div>
+    </div>
+
+    <!-- HERO GRID (RUMAH KENANGAN & COUNTDOWN BERDAMPINGAN) -->
+    <div class="hero-grid animate-reveal delay-3">
+      
+      <!-- HERO CARD (KIRI) -->
+      <div class="hero-card">
+        <h2>Rumah Kenangan Digital Kita</h2>
+        <p>
+          Setiap detik yang telah kita lewati—dari awal menginjakkan kaki di kelas 10 hingga momen keemasan di kelas 12—tersimpan rapi di sini. Jelajahi dokumentasi perjalanan kita melalui menu di bawah ini.
+        </p>
+      </div>
+
+      <!-- COUNTDOWN TIMER (KANAN) -->
+      <div class="countdown-card">
+        <p class="countdown-title">🎓 Menuju Hari Kelulusan XII TJKT 2</p>
+        <div class="timer-container" id="countdown">
+          <div class="time-box">
+            <span id="days">00</span>
+            <label>Hari</label>
+          </div>
+          <div class="time-box">
+            <span id="hours">00</span>
+            <label>Jam</label>
+          </div>
+          <div class="time-box">
+            <span id="minutes">00</span>
+            <label>Menit</label>
+          </div>
+          <div class="time-box">
+            <span id="seconds">00</span>
+            <label>Detik</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FEATURE GRID -->
+    <div class="feature-grid animate-reveal delay-3">
+      
+      <a href="kelas10.html" class="feature-card">
+        <div>
+          <div class="card-top">
+            <span class="step-number">01</span>
+            <span class="year-badge">Fase Awal 🌱</span>
+          </div>
+          <div class="feature-title">Kenangan Kelas X</div>
+          <div class="feature-desc">Masa awal saling mengenal, kecanggangan pertama, dan langkah awal membangun kebersamaan di sekolah.</div>
+        </div>
+        <div class="card-action">
+          Jelajahi Momen &rarr;
+        </div>
+      </a>
+
+      <a href="kelas11.html" class="feature-card">
+        <div>
+          <div class="card-top">
+            <span class="step-number">02</span>
+            <span class="year-badge">Fase Perjuangan 💻</span>
+          </div>
+          <div class="feature-title">Kenangan Kelas XI</div>
+          <div class="feature-desc">Masa-masa penuh semangat, perjuangan tugas praktik jaringan, dan ikatan yang semakin solid.</div>
+        </div>
+        <div class="card-action">
+          Jelajahi Momen &rarr;
+        </div>
+      </a>
+
+      <a href="kelas12.html" class="feature-card">
+        <div>
+          <div class="card-top">
+            <span class="step-number">03</span>
+            <span class="year-badge">Fase Kelulusan 🎉</span>
+          </div>
+          <div class="feature-title">Kenangan Kelas XII</div>
+          <div class="feature-desc">Puncak perjalanan kita. Dokumentasi acara kebersamaan, video vlog, hingga perayaan momen spesial.</div>
+        </div>
+        <div class="card-action">
+          Jelajahi Momen &rarr;
+        </div>
+      </a>
+
+    </div>
+
+    <!-- BANNER BAWAH -->
+    <div class="farewell-banner animate-reveal delay-3">
+      <h3>"Bersama Menciptakan Cerita, Abadi dalam Kenangan"</h3>
+      <p>Terima kasih telah menjadi bagian dari keluarga besar TJKT 2. Semoga website sederhana ini bisa menjadi tempat kita bernostalgia di masa depan.</p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      Dibuat oleh XII TJKT 2 • SMK Negeri 1 Klaten
+    </footer>
+  </div>
+
+  <!-- MASKOT KUCING FLOATING WIDGET -->
+  <div class="cat-mascot-widget">
+    <div class="cat-speech-bubble" id="catBubble">
+      Halo! Selamat menjelajahi kenangan XII TJKT 2! 🐱✨
+    </div>
+    <div class="cat-avatar-btn" id="catBtn" onclick="toggleCatBubble()" title="Klik Maskot Kucing">
+      🐱
+    </div>
+  </div>
+
+  <!-- SCRIPT COUNTDOWN TIMER & MASKOT -->
+  <script>
+    // Target Tanggal Kelulusan (3 Mei 2027)
+    const targetDate = new Date(2027, 4, 3, 0, 0, 0).getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference < 0) {
+        document.getElementById("countdown").innerHTML = 
+          "<h3 style='color: #0284c7; font-size: 1.1rem; font-weight: 800;'>Selamat Atas Kelulusan XII TJKT 2! 🎉🎓</h3>";
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Toggle Gelembung Maskot Kucing
+    function toggleCatBubble() {
+      const bubble = document.getElementById("catBubble");
+      if (bubble.style.display === "none") {
+        bubble.style.display = "block";
+      } else {
+        bubble.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
